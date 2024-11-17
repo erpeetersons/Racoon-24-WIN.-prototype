@@ -15,7 +15,7 @@ min_face_size = (30, 30)
 time_buffer = 1
 
 # Index of camera. If camera does not open with 0, try increasing this integer.
-camera_index = 0.
+camera_index = 0
 
 if __name__ == "__main__":
     image_when_person = cv2.resize(image_when_person, new_image_size)
