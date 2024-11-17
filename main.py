@@ -30,7 +30,6 @@ if __name__ == "__main__":
 
     last_detection_time = 0
 
-    # Allow resizing of OpenCV windows
     cv2.namedWindow("Camera - Face Detection", cv2.WINDOW_NORMAL)
     cv2.namedWindow("Image", cv2.WINDOW_NORMAL)
 
