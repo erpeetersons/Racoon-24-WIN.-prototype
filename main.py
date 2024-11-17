@@ -1,16 +1,21 @@
 import cv2
 import time
 
-image_when_person = cv2.imread("film_on.jpg") # Image to display when a person is detected.
-image_when_no_person = cv2.imread("film_off.jpg") # Image to display when a person is not detected.
+# Image to display when a person is detected.
+image_when_person = cv2.imread("film_on.jpg")
+# Image to display when a person is not detected.
+image_when_no_person = cv2.imread("film_off.jpg")
 
-new_image_size = (1280, 720) # To what width, hight images should be resized.
+new_image_size = (1280, 720)  # To what width, hight images should be resized.
 
-min_face_size = (30, 30) # What should be the minimal width, hight for detecting a face.
+# What should be the minimal width, hight for detecting a face.
+min_face_size = (30, 30)
 
-time_buffer = 1 # How many seconds should the buffer be before the images change.
+# How many seconds should the buffer be before the images change.
+time_buffer = 1
 
-camera_index = 0 # Index of camera. If camera does not open with 0, try increasing this integer.
+# Index of camera. If camera does not open with 0, try increasing this integer.
+camera_index = 0.
 
 if __name__ == "__main__":
     image_when_person = cv2.resize(image_when_person, new_image_size)
@@ -18,11 +23,17 @@ if __name__ == "__main__":
 
     current_image = image_when_no_person
 
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    face_cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
     camera = cv2.VideoCapture(camera_index)
 
     last_detection_time = 0
+
+    # Allow resizing of OpenCV windows
+    cv2.namedWindow("Camera - Face Detection", cv2.WINDOW_NORMAL)
+    cv2.namedWindow("Image", cv2.WINDOW_NORMAL)
+
     while True:
         ret, frame = camera.read()
         if not ret:
@@ -30,7 +41,8 @@ if __name__ == "__main__":
 
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=min_face_size)
+        faces = face_cascade.detectMultiScale(
+            gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=min_face_size)
 
         if len(faces) > 0:
             if time.time() - last_detection_time > time_buffer:
